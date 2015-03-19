@@ -1,0 +1,130 @@
+<?php
+$I = new SGuy($scenario);
+$Man_last_name   ='Петренко';
+$Man_first_name  ='Гертруд';
+$Man_middle_name ='Альбертович';
+$Man_phone       ='9202199999';
+$Man_email       ='newclient@glient.ru';
+$Man_region      ='Москва';
+$Man_city        ='Химки';
+$Man_adress      ='Российская федерация, город Москва, район Химки, улица Тимирязева, дом 34, квартира 35';
+
+$test_client = new TestClient($Man_last_name, $Man_first_name, $Man_middle_name, $Man_phone, $Man_email, $Man_region, $Man_city, $Man_adress);
+$waiting_time = 10000;
+$jsCondition = 'jQuery.active == 0';
+
+$I->wantTo('Check parially paid if one or more goods are in paid status');
+###Test start
+TestCommons::LoginCRM($I,'ksenia','ME3ahE8H');
+#Delivery manager
+/*
+$I->click('Заказы');
+#$I->wait(15000);
+#
+
+TestCommons::CreateOrder($I,$test_client);
+$I->fillField('photo_link','5');
+$I->executeJS("$('input#photo_link').trigger(jQuery.Event('keypress', {keyCode: 13}));");
+$I->waitForJs($waiting_time, $jsCondition);
+for ($i=1; $i <= 6; ++$i )
+{
+$I->click('Добавить товар');
+$I->waitForJs($waiting_time, $jsCondition);
+}
+$I->waitForJs($waiting_time, $jsCondition);
+$I->fillField('photo_link','3');
+$I->executeJS("$('input#photo_link').trigger(jQuery.Event('keypress', {keyCode: 13}));");
+$I->waitForJs($waiting_time, $jsCondition);
+$I->click('Добавить товар');
+$I->waitForJs($waiting_time, $jsCondition);
+#Set statuses
+#$I->wait(25000);
+$NeedStatus = 'Оплачен';
+$I->executeJS('$(".explode_positions.no_position_purchase_comment.button.tiny.radius").click();');
+$I->waitForJs($waiting_time, $jsCondition);
+$val = $I->grabTextFrom('//*[@id="orderposition-grid"]/table');
+$I->see($val);
+for($i=1; $i <= 8; ++$i)
+{
+
+	$I->executeJS('$($("tr[class^=\"orderitemrow_\"]").get('.$i.')).find(".updateOPstatus").click();
+	');
+	$I->waitForJs($waiting_time, $jsCondition);
+	$I->click($NeedStatus);
+	$I->waitForJs($waiting_time, $jsCondition);
+}
+$I->click('Сохранить');
+$I->waitForJs($waiting_time, $jsCondition);
+$I->click('Вернуться к заказу');
+$I->waitForJs($waiting_time, $jsCondition);
+#$I->wait(15000);
+#if ($I->canSee('Слишком рано звонить'))
+#{
+#  $I->executeJS('$(".ui-icon.ui-icon-closethick").click();');
+#}   # Executing of this js brake next xpath , why ???!?!?
+$valSee = $I->grabTextFrom('.//*[@id="content"]/div[2]/div/div[1]/b/span[2]');
+$I->cansee($valSee);
+#$I->wait(10000);
+$I->see($NeedStatus,'//*[@id="content"]/div[2]/div/div[1]/b/span[2]');
+#$I->wait(15000);
+$I->click('Изменить заказ');
+$I->waitForJs($waiting_time, $jsCondition);
+$I->wait(15000);
+
+*/
+$I->click('Заказы');
+$I->waitForJs($waiting_time, $jsCondition);
+$I->amOnPage('/index.php?r=order/update&id=180012');
+#$I->click('180012');
+$I->waitForJs($waiting_time, $jsCondition);
+$I->wait(15000);
+#$I->click('Изменить заказ');
+#$I->waitForJs($waiting_time, $jsCondition);
+
+#$I->executeJS('$(".explode_positions.no_position_purchase_comment.button.tiny.radius").click();');
+
+#$I->grabTextFrom('(/html//*[contains( concat(" ",@class, " ") , "updateOPstatus")]) [1]');
+#try
+#{
+#  $StatusesOfGoods = array();
+#  for ($i = 1; $i < 10; ++$i)
+#  {
+#    array_push($StatusesOfGoods, $I->grabTextFrom('(//*[contains( concat(" ",@class, " ") , "updateOPstatus")])['.$i.']"))'));
+#  }
+#}
+#catch (Exception $e)
+#{
+#
+#}
+#$I->see($StatusesOfGoods[3]);
+
+$oneArray = array();
+for ($i = 1; $i < 7; ++$i)
+{
+  $I->wait(20000);
+  #$I->executeJS('$("#Client_last_name").val($($(".updateOPstatus")['.$i.']).text( ) );');
+  $I->executeJS('$("#Order_comments").html($($(".updateOPstatus")['.$i.']).html( ) );');
+  $I->executeJS('$("#Order_comments").val($($(".updateOPstatus")['.$i.']).html( ) );');
+  $I->executeJS('console.log($("#Order_comments").html())');
+  $I->executeJS('console.log($("#Order_comments").val())');
+  # $I->executeJS('$("[name="Client[last_name]"]").val($($(".updateOPstatus")['.$i.']).text());');
+  $I->waitForJs($waiting_time, $jsCondition);
+  $I->wait(15000);
+  $I->click('Сохранить');
+  $I->waitForJs($waiting_time, $jsCondition);
+  #$buf = $I->grabTextFrom('//*[@id="Client_last_name"]');
+  $buf = $I->grabTextFrom('//*[@id="Order_comments"]');
+  array_push($oneArray, $buf);
+  $I->cansee($oneArray[$i]);
+  $I->waitForJs($waiting_time, $jsCondition);
+}
+
+$I->cansee($oneArray[0]);
+$I->cansee($oneArray[1]);
+$I->cansee($oneArray[2]);
+$I->cansee($oneArray[3]);
+$I->cansee($oneArray[4]);
+$I->cansee($oneArray[5]);
+$I->cansee($oneArray[6]);
+
+

@@ -1,0 +1,18 @@
+class_name: NoGuy
+modules:
+    enabled:
+        - Selenium2
+        - WebHelper
+        - WebDebug
+       # - Db
+    config:
+        Selenium2:
+            url: 'http://UserName:Password@testcrm.url.ru/'
+            browser: chrome
+            capabilities:
+                unexpectedAlertBehaviour: 'accept'
+      #  Db:
+           # dsn: 'PDO DSN HERE'
+     #       user: 'root'
+     #       password:
+     #       dump: /home/alexanez/_data/daily_url_ru_2013-10-07_05h05m_Monday.sql

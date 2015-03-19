@@ -1,0 +1,10 @@
+class_name: OrGuy
+modules:
+    enabled:
+        - Selenium2
+        - WebHelper
+        - WebDebug
+    config:
+        Selenium2:
+            url: 'http://UserName:Password@testcrm.url.ru/'
+            browser: chrome

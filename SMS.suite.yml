@@ -1,0 +1,13 @@
+class_name: SMSGuy
+modules:
+    enabled:
+        - Selenium2
+        - WebHelper
+        #- SeleniumHelper
+        - WebDebug
+    config:
+        Selenium2:
+            url: 'http://UserName:Password@testcrm.url.ru/'
+            browser: chrome
+            capabilities:
+                unexpectedAlertBehaviour: 'accept'

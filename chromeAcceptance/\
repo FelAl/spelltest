@@ -1,0 +1,40 @@
+<?php
+$I = new NoGuy($scenario);
+$I->wantTo('Create new order');
+$I->amOnPage('/');
+$I->see('Логин');
+$I->fillField('Логин','ksenia');
+$I->fillField('Пароль','ME3ahE8H' );
+$I->click('Войти');
+$I->see('Выйти');
+$I->click('Новый заказ');
+$I->acceptPopup();
+$I->see('Выйти');
+$I->fillField('//*[@id="phone"]','9202122933');
+$I->click('Поиск клиента');
+$I->wait(4000);
+#$I->see('Клиент не найден');
+$I->click('Создать заказ');
+$I->fillField('Client_last_name','Иванов');
+$I->fillField('Client_first_name','Валентин');
+$I->fillField('Client_middle_name','Альбертович');
+$I->fillField('Client_email','newclient@client.ru');
+$I->selectOption('Order[region_id]','Москва');
+$I->wait(3000);
+$I->selectOption('Order[city_id]','Химки');
+$I->selectOption('Order[status]','Подтвержден');
+$I->selectOption('Order[delivery_type]','Курьер');
+$I->click('Указать получателя');
+$I->fillField('Order[recipient_last_name]','Иванова');
+$I->fillField('Order[recipient_first_name]','Алина');
+$I->fillField('Order[recipient_phone]','9201142393');
+$I->fillField('Order_comments','Российская федерация, город Москва, район Химки, улица Тимирязева, дом 34, квартира 35');
+$I->checkOption('У метро');
+$I->fillField('photo_link','5');
+$I->executeJS(event.keyCode=13);
+#$I->pressKey('photo_link', '13');
+$I->wait(5000);
+
+
+
+#$I->click('Сохранить и закрыть');
